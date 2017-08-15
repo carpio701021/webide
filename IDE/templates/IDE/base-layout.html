@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Página principal</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'IDE/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'IDE/css/open-iconic-bootstrap.min.css' %}">
+    <link rel='stylesheet' href="{% static 'IDE/css/basic-webide.css' %}" type="text/css" />
+
+  </head>
+
+<body>
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler"
+            aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+        <a class="navbar-brand" href="#">FISQL</a>
+
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                                Archivo
+                            </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                                Herramientas
+                            </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">+ Backup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">* Restore</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0"> 
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Javier Carpio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <br /><br /><br />
+
+    <div>
+        {% block content %} contenido {% endblock content %}
+
+
+
+    <script src="{% static 'IDE/js/jquery.min.js' %}"></script>
+    <script src="{% static 'IDE/js/popper.min.js' %}"></script>
+    <script src="{% static 'IDE/js/bootstrap.min.js' %}"></script>
+    
+</body>
+
+</html>
