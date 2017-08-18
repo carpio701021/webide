@@ -1,5 +1,6 @@
 {% extends "IDE/base-layout.html" %} {% block content %}
 
+
 <div class="div-container-tree">
     <br><br><br>
     <button class="btn">+ Bases de datos</button>
@@ -26,7 +27,7 @@
             </li>
         </ul>
         <div class="tab-content tab-content-full" id="myTabContent">
-            <div class="tab-pane fade show tab-pane-content-full active" id="sql" role="tabpanel" aria-labelledby="sql-tab">
+            <div class="tab-pane fade show active tab-pane-content-full" id="sql" role="tabpanel" aria-labelledby="sql-tab">
                 <textarea class="sql-editor">Aqui el editor de SQL</textarea>
             </div>
             <div class="tab-pane fade tab-pane-content-full" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
@@ -35,35 +36,35 @@
         </div>
     </div>
     <div class="div-container-outputs">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="salida-datos-tab" data-toggle="tab" href="#salida-datos" role="tab" aria-controls="salida-datos"
-                    aria-expanded="true">Salida de datos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="plan-tab" data-toggle="tab" href="#plan" role="tab" aria-controls="plan">Plan de ejecución</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="mensajes-tab" data-toggle="tab" href="#mensajes" role="tab" aria-controls="mensajes">Mensajes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="historial-tab" data-toggle="tab" href="#historial" role="tab" aria-controls="historial">Historial</a>
-            </li>
-        </ul>
-        <div class="tab-content tab-content-full" id="myTabContent">
-            <div class="tab-pane fade show active tab-pane-content-full" id="salida-datos" role="tabpanel" aria-labelledby="salida-datos">
-                <textarea class="sql-editorr">Aqui el editor de SQL</textarea>
-            </div>
-            <div class="tab-pane fade tab-pane-content-full" id="plan" role="tabpanel" aria-labelledby="plan-tab">
-                <h3>Plan de ejecución</h3>
-            </div>
-            <div class="tab-pane fade tab-pane-content-full" id="mensajes" role="tabpanel" aria-labelledby="mensajes-tab">
-                <h3>Mensajes</h3>
-            </div>
-            <div class="tab-pane fade tab-pane-content-full" id="historial" role="tabpanel" aria-labelledby="historial-tab">
-                <h3>Historial</h3>
-            </div>
-        </div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="salida-datos-tab" data-toggle="tab" href="#salida-datos" role="tab" aria-controls="salida-datos" aria-expanded="true">Salida de datos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="plan-tab" data-toggle="tab" href="#plan" role="tab" aria-controls="plan">Plan de ejecución</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" id="mensajes-tab" data-toggle="tab" href="#mensajes" role="tab" aria-controls="mensajes">Mensajes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="historial-tab" data-toggle="tab" href="#historial" role="tab" aria-controls="historial">Historial</a>
+                    </li>
+                    
+                </ul>
+                <div class="tab-content tab-content-full" id="myTabContent">
+                    <div class="tab-pane fade show active tab-pane-content-full" id="salida-datos" role="tabpanel" aria-labelledby="salida-datos">
+                            <textarea class="sql-editorr">Aqui el editor de SQL</textarea>
+                    </div>
+                    <div class="tab-pane fade tab-pane-content-full" id="plan" role="tabpanel" aria-labelledby="plan-tab">
+                            <h3>Plan de ejecución</h3>
+                        </div>
+                    <div class="tab-pane fade tab-pane-content-full" id="mensajes" role="tabpanel" aria-labelledby="mensajes-tab">
+                            <h3>Mensajes</h3>
+                        </div>
+                    <div class="tab-pane fade tab-pane-content-full" id="historial" role="tabpanel" aria-labelledby="historial-tab">
+                            <h3>Historial</h3>
+                        </div>
+                </div>
     </div>
 </div>
 
