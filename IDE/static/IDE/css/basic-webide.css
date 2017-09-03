@@ -4,30 +4,79 @@ body {
 }
 
 html, body { height: 100%; padding: 0; margin: 0; }
-.div-container-tree { width: 20%; height: 100%; float: left;  background: #444;}
-.div-container-right { width: 80%; height: 100%; float: left;  background: #E9E9E9;}
+.div-container-left { 
+    width: 20%; 
+    height: 100%; 
+    float: left;  
+    background: #919191;
+    border-style: solid;
+    border-width: 0px 5px 0px 0px;
+    border-color: #262A43;}
+.div-container-right { width: 80%; height: 100%; float: left;  background: #B6B6B6;}
+
+.div-container-tree { 
+    width: 100%; 
+    height: 100%; 
+    float: left;  
+    padding-top: 5px;
+    border-style: solid;
+    border-width: 2px 0px 5px 0px;
+    border-color: #262A43;
+}
+
 .div-container-editors { 
     width: 100%; 
     height: 70%; 
     float: left;  
+    padding-top: 5px;
+    border-style: solid;
+    border-width: 2px 0px 5px 0px;
+    border-color: #262A43;
 }
-.div-container-outputs { width: 100%; height: 30%; float: left;  background: #4DAF3C;}
+.div-container-outputs { 
+    width: 100%; 
+    height: 30%; 
+    float: left;
+    padding-top: 5px; 
+}
 
 .navbar-separator {
-    height: 60px;
+    height: 56px;
 }
 
-.tab-content-full {
+.nav-tabs {
+    padding-left: 5px;
+}
+
+.tab-content-full-editor {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    padding-bottom: 105px;
+    padding-bottom: 42px;
 }
 
-.tab-pane-content-full {
+
+.tab-content-full-output {
     width: 100%;
     height: 100%;
-    background: #03034A;
+    overflow: hidden;
+    padding-bottom: 98px;
+}
+
+.tab-pane-item-editor {
+    width: 100%;
+    height: 100%;
+    background: #01012F;
+}
+
+.tab-pane-item-output {
+    width: 100%;
+    height: 100%;
+    background: #FFFFFF;
+
+    border-style: solid;
+    border-width: 2px 0px 0px 0px;
+    border-color: #FFFFFF;
 }
 
 
@@ -36,4 +85,27 @@ html, body { height: 100%; padding: 0; margin: 0; }
     height: 100%;
     float: left;
     border: none;
+    
+    font-family: Consolas, monaco, monospace;
+	font-size: 17px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 25px;
+}
+
+.console {
+    width: 100%;
+    height: 100%;
+    float: left;
+    border: none;
+
+    background-color: #08001D;
+    color: #25D225;
+    font-family: Consolas, monaco, monospace;
+	font-size: 15px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 18px;
 }

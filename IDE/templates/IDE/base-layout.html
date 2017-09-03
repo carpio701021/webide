@@ -8,7 +8,7 @@
     <title>Página principal</title>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'IDE/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'IDE/css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'IDE/css/font-awesome.min.css' %}">
     <link rel='stylesheet' href="{% static 'IDE/css/basic-webide.css' %}" type="text/css" />
 
   </head>
@@ -75,7 +75,13 @@
     <script src="{% static 'IDE/js/jquery.min.js' %}"></script>
     <script src="{% static 'IDE/js/popper.min.js' %}"></script>
     <script src="{% static 'IDE/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'IDE/js/bootstrap-treeview.js' %}"></script>
+    <script src="{% static 'IDE/js/web-ide-scripts.js' %}"></script>
+    
+
+    {% block javascript %} codigo javascript {% endblock javascript %}
     
 </body>
+
 
 </html>
