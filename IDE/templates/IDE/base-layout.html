@@ -5,11 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Página principal</title>
+    <title>IDE Web</title>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'IDE/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'IDE/css/font-awesome.min.css' %}">
     <link rel='stylesheet' href="{% static 'IDE/css/basic-webide.css' %}" type="text/css" />
+    
+    <!-- Codemirror style -->
+    <link rel="stylesheet" href="{% static 'IDE/codemirror/lib/codemirror.css' %}">
+    <link rel="stylesheet" href="{% static 'IDE/codemirror/addon/fold/foldgutter.css' %}">
+    <link rel="stylesheet" href="{% static 'IDE/codemirror/addon/dialog/dialog.css' %}">
+    <link rel="stylesheet" href="{% static 'IDE/codemirror/theme/monokai.css' %}">
+    <link rel="stylesheet" href="{% static 'IDE/codemirror/addon/hint/show-hint.css' %}" />
 
   </head>
 
@@ -30,9 +37,9 @@
                                 Archivo
                             </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item" id="btnNewScriptEditor" href="#" ><span class="fa fa-code"></span> New USQL editor</a>
+                            <a class="dropdown-item" id="btnOpenScriptEditor-tab" href="javascript:void(0)" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-file"></span> Open USQL from database</a>
+                            <a class="dropdown-item" id="btnUploadScriptEditor-tab" href="javascript:void(0)" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-cloud-upload"></span> Upload USQL</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -77,7 +84,25 @@
     <script src="{% static 'IDE/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'IDE/js/bootstrap-treeview.js' %}"></script>
     <script src="{% static 'IDE/js/web-ide-scripts.js' %}"></script>
+
     
+    <!-- Codemirror scripts -->
+    <script src="{% static 'IDE/codemirror/lib/codemirror.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/search/searchcursor.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/search/search.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/dialog/dialog.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/edit/matchbrackets.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/edit/closebrackets.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/comment/comment.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/wrap/hardwrap.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/fold/foldcode.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/fold/brace-fold.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/mode/usql/usql.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/keymap/sublime.js' %}"></script>
+
+    <script src="{% static 'IDE/codemirror/addon/hint/show-hint.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/hint/sql-hint.js' %}"></script>
+        
 
     {% block javascript %} codigo javascript {% endblock javascript %}
     

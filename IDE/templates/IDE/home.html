@@ -11,7 +11,7 @@
                     aria-expanded="true">Bases de datos</a>
             </li>
         </ul>
-        <div class="tab-content tab-content-full-output" id="myTabContent">
+        <div class="tab-content tab-content-full-output" id="myTreeTabContent">
             <div class="tab-pane fade show active tab-pane-item-output" id="tree-tab" role="tabpanel" aria-labelledby="tree-tab">
                 <div id="treeview12" class=""></div>
             </div>
@@ -24,31 +24,28 @@
 
     <!-- Editors container -->
     <div class="div-container-editors">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs" id="ul-container-editors-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="sql-tab" data-toggle="tab" href="#sql" role="tab" aria-controls="sql" aria-expanded="true">SQL</a>
+                <a class="nav-link active" id="sql-tab" data-toggle="tab" href="#sql" role="tab" aria-controls="sql" aria-expanded="false">SQL</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Script 1</a>
-            </li>
-            <li class="nav-item dropdown">
+            
+            <!-- Aqui entran los nuevos tab de editores -->            
+            <!--li class="nav-item dropdown" id="div-container-editors-li-menu">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="fa fa-plus"></span>
                     </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" id="dropdown1-tab" href="#dropdown1" role="tab" data-toggle="tab" aria-controls="dropdown1"><span class="fa fa-code"></span> New USQL editor</a>
-                    <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-file"></span> Open USQL from database</a>
-                    <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-cloud-upload"></span> Upload USQL</a>
+                    <a class="dropdown-item" id="btnNewScriptEditor" href="#" ><span class="fa fa-code"></span> New USQL editor</a>
+                    <a class="dropdown-item" id="btnOpenScriptEditor-tab" href="javascript:void(0)" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-file"></span> Open USQL from database</a>
+                    <a class="dropdown-item" id="btnUploadScriptEditor-tab" href="javascript:void(0)" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-cloud-upload"></span> Upload USQL</a>
                 </div>
-            </li>
+            </li-->
         </ul>
-        <div class="tab-content tab-content-full-editor" id="myTabContent">
-            <div class="tab-pane fade show tab-pane-item-editor active" id="sql" role="tabpanel" aria-labelledby="sql-tab">
-                <textarea class="sql-editor">Aqui el editor de SQL</textarea>
+        <div class="tab-content tab-content-full-editor" id="myEditorsTabContent">
+            <div class="tab-pane fade tab-pane-item-editor show active" id="sql" role="tabpanel" aria-labelledby="sql-tab">
+                <article id="txtScript_sql" class="code-editor"></article>
             </div>
-            <div class="tab-pane fade tab-pane-item-editor" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-            <div class="tab-pane fade tab-pane-item-editor" id="dropdown1" role="tabpanel" aria-labelledby="dropdown1-tab">...</div>
-            <div class="tab-pane fade tab-pane-item-editor" id="dropdown2" role="tabpanel" aria-labelledby="dropdown2-tab">...</div>
+            <!-- Aqui entran los nuevos editores -->
         </div>
     </div>
 
@@ -70,18 +67,18 @@
                 <a class="nav-link" id="historial-tab" data-toggle="tab" href="#historial" role="tab" aria-controls="historial">Historial</a>
             </li>
         </ul>
-        <div class="tab-content tab-content-full-output" id="myTabContent">
+        <div class="tab-content tab-content-full-output" id="myOutputsTabContent">
             <div class="tab-pane fade show active tab-pane-item-output" id="salida-datos" role="tabpanel" aria-labelledby="salida-datos">
-                <textarea class="console"> FISQL $ </textarea>
+                <textarea id="output-datos" class="console"></textarea>
             </div>
             <div class="tab-pane fade tab-pane-item-output" id="plan" role="tabpanel" aria-labelledby="plan-tab">
-                <h3>Plan de ejecución</h3>
+                <textarea id="output-plan" class="console"></textarea>
             </div>
             <div class="tab-pane fade tab-pane-item-output" id="mensajes" role="tabpanel" aria-labelledby="mensajes-tab">
-                <h3>Mensajes</h3>
+                <textarea id="output-mensajes" class="console"></textarea>
             </div>
             <div class="tab-pane fade tab-pane-item-output" id="historial" role="tabpanel" aria-labelledby="historial-tab">
-                <h3>Historial</h3>
+                <textarea id="output-historial" class="console"></textarea>
             </div>
         </div>
     </div>
@@ -91,8 +88,6 @@
 
 
 {% block javascript %}
-
-
 
 <script type="text/javascript">
     
