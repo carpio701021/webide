@@ -1,7 +1,7 @@
 import socket
 
-class socket_client:
-    
+class SocketClient:
+
     TCP_IP = '127.0.0.1'
     TCP_PORT = 9770
     BUFFER_SIZE = 1024
@@ -9,7 +9,9 @@ class socket_client:
     def sendToServer(self, message):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((self.TCP_IP, self.TCP_PORT))
-        s.send(message)
+        s.sendall((message+"\n").encode(encoding='UTF-8'))
+        s.sendall(('$$$$$*$*$*$*****$$$$$\n'.encode(encoding='utf_8')))
         data = s.recv(self.BUFFER_SIZE)
+        print('Data recibida: _'+data.decode(encoding='UTF-16')+'_')
         s.close()
-        return data
+        return data.decode(encoding='UTF-8')

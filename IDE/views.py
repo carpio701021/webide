@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from .socket_client import SocketClient
 
 def index(request):
     return render(request, 'IDE/home.html')
@@ -22,12 +23,15 @@ def newScriptPanelTab(request):
 
 @csrf_exempt
 def executeScript(request):
+    sqlCode = request.POST['sqlcode']
+    s = SocketClient()
+    respuesta = s.sendToServer( sqlCode )
+    #esta variable respuesta es la que debe ser parseada para generar luego el json
 
-    salida = "Desde el backend hasta la salida de datos :):\n" + request.POST['sqlcode']
 
-
+    #aqui un json de ejemplo para la respuesta
     return JsonResponse({
-        'salida'    : salida + '\n',
+        'salida'    : respuesta + '\n',
         'plan'      : 'Desde el backend hasta el plan de ejecución' + '\n\n',
         'mensajes'  : 'Desde el backend hasta los mensajes XD ' + '\n\n',
         'historial' : 'Desde el backend hasta el historial' + '\n\n'

@@ -1,6 +1,5 @@
-
-
 var scriptPanelCounter = 0;
+var codeEditors = {};
 
 function updateDbTree(){
     $.get("/ide/getDbTree", function(data, status){
@@ -34,11 +33,13 @@ function init_codemirror_editor(article_id,value){
           countries: {name: null, population: null, size: null}
         }}
     });
+    codeEditors[article_id] = editor;
 }
 
+
+// Funcion que se ejecuta al cargar la pagina
 $(function() {
     updateDbTree();
-
 
     var value = "// The bindings asdf defined specifically in the Sublime Text mode\nvar bindings = {\n";
     
@@ -46,9 +47,6 @@ $(function() {
     value += CodeMirror.commands.joinLines.toString().replace(/^function\s*\(/, "function joinLines(").replace(/\n  /g, "\n") + "\n";
     
     init_codemirror_editor('txtScript_sql', value);
-    
-   
-
 });
 
 
@@ -64,11 +62,14 @@ $('#btnNewScriptEditor').click(function() {
     });
 });
 
+// manda el codigo de un editor a ser analizado y devuelve la respuesta a los outputs
 function executeScript(scriptPanelNum){
+    //var editor = document.querySelector('#txtScript'+scriptPanelNum + ' + .codeMirror');
+    //alert( editor.getValue() );
     $.post("/ide/executeScript", 
     {
         scriptPanelNum: scriptPanelNum,
-        sqlcode: $('#txtScript'+scriptPanelNum).val()
+        sqlcode: codeEditors['txtScript'+scriptPanelNum].getValue()
     })
         .done(function(json_respuesta, status){
             $('#output-datos').val($('#output-datos').val()+json_respuesta['salida']);
