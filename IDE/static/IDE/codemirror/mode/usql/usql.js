@@ -71,17 +71,17 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
       // 1-line comment
       stream.skipToEnd();
       return "comment";
+    } else if (ch == "#" && stream.eat("*")) {
+      // multi-line comments
+      // ref: https://kb.askmonty.org/en/comment-syntax/
+      state.tokenize = tokenComment(1);
+      return state.tokenize(stream, state);
     } else if ((support.commentHash && ch == "#")
         || (ch == "-" && stream.eat("-") && (!support.commentSpaceRequired || stream.eat(" ")))) {
       // 1-line comments
       // ref: https://kb.askmonty.org/en/comment-syntax/
       stream.skipToEnd();
       return "comment";
-    } else if (ch == "/" && stream.eat("*")) {
-      // multi-line comments
-      // ref: https://kb.askmonty.org/en/comment-syntax/
-      state.tokenize = tokenComment(1);
-      return state.tokenize(stream, state);
     } else if (ch == ".") {
       // .1 for 0.1
       if (support.zerolessFloat && stream.match(/^(?:\d+(?:e[+-]?\d+)?)/i))
@@ -132,9 +132,9 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
   }
   function tokenComment(depth) {
     return function(stream, state) {
-      var m = stream.match(/^.*?(\/\*|\*\/)/)
+      var m = stream.match(/^.*?(#\*|\*#)/)
       if (!m) stream.skipToEnd()
-      else if (m[1] == "/*") state.tokenize = tokenComment(depth + 1)
+      else if (m[1] == "#*") state.tokenize = tokenComment(depth + 1)
       else if (depth > 1) state.tokenize = tokenComment(depth - 1)
       else state.tokenize = tokenBase
       return "comment"
@@ -191,8 +191,8 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
       else return cx.indent + (closing ? 0 : config.indentUnit);
     },
 
-    blockCommentStart: "/*",
-    blockCommentEnd: "*/",
+    blockCommentStart: "#*",
+    blockCommentEnd: "*#",
     lineComment: support.commentSlashSlash ? "//" : support.commentHash ? "#" : "--"
   };
 });
@@ -265,14 +265,33 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
   }
 
   // these keywords are used by all SQL dialects (however, a mode can still overwrite it)
-  var sqlKeywords = "alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit ";
-
+  ///var sqlKeywords = "alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit ";
+  var sqlKeywords = "alter and as asc between by count crear delete desc distinct drop from group having in insert into is join like no on or order select set tabla objeto union update values where limit ";
+  
   // turn a space-separated list into an array
   function set(str) {
     var obj = {}, words = str.split(" ");
     for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
     return obj;
   }
+
+  /// Definicion de USQL
+  
+  CodeMirror.defineMIME("text/usql", {
+    name: "sql",
+    client: set("t_direccion clear connect edit ego exit go help nopager notee nowarning pager print prompt quit rehash source status system tee"),
+    keywords: set("crear tabla objeto union llave_primaria llave_foranea base_datos único procedimiento funcion retorno usuario colocar password usar alterar altero agregar quitar cambiar eliminar insertar en valores actualizar donde borrar seleccionar de ordenar_por asc desc otorgar permisos denegar declarar si sino selecciona caso defecto para mientras detener imprimir fecha fecha_hora contar backup usqldump completo restaurar"),
+    builtin: set("text integer double bool date datetime char"),
+    atoms: set("no nulo"),
+    operatorChars: /^[*+\-%<>!=&|^]/,
+    dateSQL: set("date time timestamp"),
+    support: set("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber doubleQuote nCharCast charsetCast commentHash"),
+    hooks: {
+      "@":   hookVar,
+      "`":   hookIdentifier,
+      "\\":  hookClient
+    }
+  });
 
   // A generic SQL Mode. It's not a standard, it just try to support what is generally supported
   CodeMirror.defineMIME("text/x-sql", {

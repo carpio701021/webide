@@ -12,6 +12,6 @@ class SocketClient:
         s.sendall((message+"\n").encode(encoding='UTF-8'))
         s.sendall(('$$$$$*$*$*$*****$$$$$\n'.encode(encoding='utf_8')))
         data = s.recv(self.BUFFER_SIZE)
-        print('Data recibida: _'+data.decode(encoding='UTF-16')+'_')
+        print('Data recibida: _'+data.decode(encoding='UTF-8')+'_')
         s.close()
         return data.decode(encoding='UTF-8')
