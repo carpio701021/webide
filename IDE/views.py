@@ -21,6 +21,14 @@ def newScriptPanelTab(request):
     numPanel = request.GET['numPanel']
     return render(request,'IDE/components/scriptPanelTab.html' , {'numPanel':numPanel})
 
+def newReportPanel(request):
+    numPanel = request.GET['numPanel']
+    return render(request,'IDE/components/reportPanel.html' , {'numPanel':numPanel})
+
+def newReportPanelTab(request):
+    numPanel = request.GET['numPanel']
+    return render(request,'IDE/components/reportPanelTab.html' , {'numPanel':numPanel})
+
 @csrf_exempt
 def executeScript(request):
     sqlCode = request.POST['sqlcode']
@@ -37,7 +45,24 @@ def executeScript(request):
         'historial' : 'Desde el backend hasta el historial' + '\n\n'
     })
 
-    ##return HttpResponse("Hola Codigo, Django web IDE en proceso :):\n" + request.POST['sqlcode'])
+@csrf_exempt
+def executeReport(request):
+    sqlCode = request.POST['sqlcode']
+    #s = SocketClient()
+    #respuesta = s.sendToServer( sqlCode )
+    #esta variable respuesta es la que debe ser parseada para generar luego el json
+
+
+    #aqui un json de ejemplo para la respuesta
+    return JsonResponse({
+        'resultado'    : sqlCode.replace('<usql>','<usql id="codigo nuevo">') + '\n'
+    })
+
+@csrf_exempt
+def showReport(request):
+    htmlcode = request.POST['htmlcode']
+    htmlcode = htmlcode.replace("<table", "<table border=1")
+    return render(request,'IDE/reportView.html' , {'htmlcode':htmlcode})
 
 def getDbTree(request):
     return HttpResponse("""

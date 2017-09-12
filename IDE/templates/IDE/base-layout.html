@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'IDE/codemirror/addon/fold/foldgutter.css' %}">
     <link rel="stylesheet" href="{% static 'IDE/codemirror/addon/dialog/dialog.css' %}">
     <link rel="stylesheet" href="{% static 'IDE/codemirror/theme/monokai.css' %}">
+    <link rel="stylesheet" href="{% static 'IDE/codemirror/theme/material.css' %}">
     <link rel="stylesheet" href="{% static 'IDE/codemirror/addon/hint/show-hint.css' %}" />
 
   </head>
@@ -37,9 +38,10 @@
                                 Archivo
                             </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                            <a class="dropdown-item" id="btnNewScriptEditor" href="#" ><span class="fa fa-code"></span> New USQL editor</a>
-                            <a class="dropdown-item" id="btnOpenScriptEditor-tab" href="javascript:void(0)" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-file"></span> Open USQL from database</a>
-                            <a class="dropdown-item" id="btnUploadScriptEditor-tab" href="javascript:void(0)" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-cloud-upload"></span> Upload USQL</a>
+                        <a class="dropdown-item" id="btnNewScriptEditor" href="#" ><span class="fa fa-code"></span> Nuevo editor USQL</a>
+                        <a class="dropdown-item" id="btnNewReportEditor" href="#" ><span class="fa fa-file-text-o"></span> Nuevo editor de reporte USQL</a>
+                        <a class="dropdown-item" id="btnOpenScriptEditor-tab" href="javascript:void(0)" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-file"></span> Abrir USQL desde BD</a>
+                            <a class="dropdown-item" id="btnUploadScriptEditor-tab" href="javascript:void(0)" role="tab" data-toggle="tab" aria-controls="dropdown2"><span class="fa fa-cloud-upload"></span> Subir USQL</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -98,9 +100,13 @@
     <script src="{% static 'IDE/codemirror/addon/fold/foldcode.js' %}"></script>
     <script src="{% static 'IDE/codemirror/addon/fold/brace-fold.js' %}"></script>
     <script src="{% static 'IDE/codemirror/mode/usql/usql.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/mode/xml/xml.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/mode/htmlmixed/htmlmixed.js' %}"></script>
     <script src="{% static 'IDE/codemirror/keymap/sublime.js' %}"></script>
 
     <script src="{% static 'IDE/codemirror/addon/hint/show-hint.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/hint/xml-hint.js' %}"></script>
+    <script src="{% static 'IDE/codemirror/addon/hint/html-hint.js' %}"></script>
     <script src="{% static 'IDE/codemirror/addon/hint/sql-hint.js' %}"></script>
         
 
