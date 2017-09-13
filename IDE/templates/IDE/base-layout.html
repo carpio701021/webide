@@ -65,10 +65,10 @@
 
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0"> 
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Javier Carpio</a>
+                    <a class="nav-link disabled" href="#">User: {{ user|default:'No user'|safe }}, Admin: {{ admin|default:'False'|safe }} </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cerrar Sesión</a>
+                    <a class="nav-link" href="/ide/login">Cerrar Sesión</a>
                 </li>
             </ul>
         </div>

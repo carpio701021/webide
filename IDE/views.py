@@ -1,13 +1,38 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .socket_client import SocketClient
 
+@csrf_exempt
+def login(request):
+    request.session['login'] = ''
+    request.session['admin'] = ''
+    if request.method == 'GET':
+        return render(request, 'IDE/login.html')
+    elif request.method == 'POST':
+        #confirmar datos en el server
+        if( request.POST['user'] == 'admin' and request.POST['password'] == '123'):
+            print('Login exitoso')
+            #establecer cookie
+            request.session['login'] = request.POST['user']
+            request.session['admin'] = 'true'
+            return redirect('index')
+
+    
+    return render(request, 'IDE/login.html', {'error': '<i class="fa fa-close"></i> Error, usuario o contraseña inválidos'})
+    
+
 def index(request):
-    return render(request, 'IDE/home.html')
+    #leer cookie
+    if( not request.session.get('login', False) ):
+        #si no hay login redireccionar a login
+        return redirect('login')
+    
+    return render(request, 'IDE/home.html', {'user': request.session['login'], 'admin': request.session['admin']})
 
     
 def otro(request):
