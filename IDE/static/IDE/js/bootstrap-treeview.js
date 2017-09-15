@@ -40,6 +40,7 @@
             selectedIcon: '',
             checkedIcon: 'fa fa-check',
             uncheckedIcon: 'fa fa-unchecked',
+            contextMenuSelector: '#contextMenu',
     
             color: undefined, // '#000000',
             backColor: undefined, // '#FFFFFF',
@@ -50,7 +51,7 @@
             searchResultColor: '#D9534F',
             searchResultBackColor: undefined, //'#FFFFFF',
     
-            enableLinks: false,
+            enableLinks: true,
             highlightSelected: true,
             highlightSearchResults: true,
             showBorder: true,
@@ -69,7 +70,8 @@
             onNodeUnchecked: undefined,
             onNodeUnselected: undefined,
             onSearchComplete: undefined,
-            onSearchCleared: undefined
+            onSearchCleared: undefined,
+            onContextMenu: undefined
         };
     
         _default.options = {
@@ -199,6 +201,7 @@
             this.$element.off('nodeUnselected');
             this.$element.off('searchComplete');
             this.$element.off('searchCleared');
+            this.$element.off('contextmenu');
         };
     
         Tree.prototype.subscribeEvents = function () {
@@ -206,7 +209,9 @@
             this.unsubscribeEvents();
     
             this.$element.on('click', $.proxy(this.clickHandler, this));
-    
+
+            this.$element.on('contextmenu', $.proxy(this.contextMenuHandler, this));
+            
             if (typeof (this.options.onNodeChecked) === 'function') {
                 this.$element.on('nodeChecked', this.options.onNodeChecked);
             }
@@ -242,10 +247,11 @@
             if (typeof (this.options.onSearchComplete) === 'function') {
                 this.$element.on('searchComplete', this.options.onSearchComplete);
             }
-    
+            
             if (typeof (this.options.onSearchCleared) === 'function') {
                 this.$element.on('searchCleared', this.options.onSearchCleared);
             }
+
         };
     
         /*
@@ -313,6 +319,8 @@
                 }
             });
         };
+
+        
     
         Tree.prototype.clickHandler = function (event) {
     
@@ -344,7 +352,66 @@
                 this.render();
             }
         };
+        Tree.prototype.contextMenuHandler = function (event) {
+            
+            event.preventDefault();
     
+            var target = $(event.target);
+            var node = this.findNode(target);
+            if (!node || node.state.disabled) return;
+
+            // aqui la magia
+
+            var selectors = this.options.contextMenuSelector;
+            var onContextMenu = this.options.onContextMenu;
+            var cms = null;
+
+
+            var classList = target.attr('class') ? target.attr('class').split(' ') : [];
+            for(var cmsa in selectors)
+                if ((classList.indexOf(cmsa) !== -1)) cms = selectors[cmsa];
+            if (cms == null) return false;
+
+
+            //make sure menu closes on any click
+            $('body').click(function () {
+                $(cms).hide();
+            });
+
+            //
+            var getMenuPosition = function (mouse, direction, scrollDir,contextMenuSelector) {
+                var win = $(window)[direction](),
+                    scroll = $(window)[scrollDir](),
+                    menu = $(contextMenuSelector)[direction](),
+                    position = mouse + scroll;
+                            
+                // opening menu would pass the side of the page
+                if (mouse + menu > win && menu < mouse) 
+                    position -= menu;
+                
+                return position;
+            }    
+
+            var $menu = $(cms)
+            .data("invokedOn", $(event.target))
+            .show()
+            .css({
+                position: "absolute",
+                left: getMenuPosition(event.clientX, 'width', 'scrollLeft',cms),
+                top: getMenuPosition(event.clientY, 'height', 'scrollTop',cms)
+            })
+            .off('click')
+            .on('click', 'a', function (event) {
+                $menu.hide();
+        
+                var $invokedOn = $menu.data("invokedOn");
+                var $selectedMenu = $(event.target);
+                
+                onContextMenu.call(this, $invokedOn, $selectedMenu);
+            });
+            
+        };
+            
         // Looks up the DOM for the closest parent list item to retrieve the
         // data attribute nodeid, which is used to lookup the node in the flattened structure.
         Tree.prototype.findNode = function (target) {

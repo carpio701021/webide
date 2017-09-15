@@ -7,7 +7,24 @@ function updateDbTree(){
         json = data;
         var $tree = $('#treeview12').treeview({
             data: json,
-            showBorder: false
+            showBorder: false,
+            contextMenuSelector: {
+                'cm-databases'   : '#contextMenu_databases',
+                'cm-database'   : '#contextMenu_database',
+                'cm-tables'     : '#contextMenu_tables',
+                'cm-table'      : '#contextMenu_table',
+                'cm-procedures'  : '#contextMenu_procedures',
+                'cm-procedure'  : '#contextMenu_procedure',
+                'cm-objects'     : '#contextMenu_objects',
+                'cm-object'     : '#contextMenu_object'
+            },
+            onContextMenu: function (invokedOn, selectedMenu) {
+                var msg = "You selected the menu item '" + selectedMenu.text() +
+                    "' on the value '" + invokedOn.text() + "'";
+                alert(msg);
+                if(invokedOn.attr('db')!=undefined)
+                alert("Atributo bd: "+invokedOn.attr('db'));
+            }
         });
     
     });
@@ -151,3 +168,4 @@ function submit_post_via_hidden_form(url, params) {
     f.submit();
     f.remove();
 }
+

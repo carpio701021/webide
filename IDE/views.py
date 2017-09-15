@@ -91,46 +91,91 @@ def showReport(request):
 
 def getDbTree(request):
     return HttpResponse("""
-    [
-        {
-            "text": "BD 1",
-            "icon": "fa fa-database",
-            "nodes" : [
-                {
-                    "text": "Tablas",
-                    "icon": "fa fa-table",
-                    "nodes": [
-                        {
-                        "text": "Tabla 1",
-                        "icon": "fa fa-table"
-                        },
-                        {
-                        "text": "Tabla 2",
-                        "icon": "fa fa-table"
-                        }
-                    ]
-                },
-                {
-                    "text": "Procedimientos",
-                    "icon": "fa fa-code"
-                },
-                {
-                    "text": "Objetos",
-                    "icon": "fa fa-cube"
-                }
-            ]
-        },
-        {
-            "text": "BD FISQL"
-        },
-        {
-            "text": "BD 3"
-        },
-        {
-            "text": "Base de datos prueba"
-        },
-        {
-            "text": "BD prueba 5"
-        }
-    ]
+[
+    {
+
+        "text": "<span class='cm-databases'>Bases de datos</span>",
+        "icon": "fa fa-database",
+        "nodes" : [
+            {
+                "text": "<span class='cm-database' db='DB_1'>BD_1</span>",
+                "icon": "fa fa-database",
+                "nodes" : [
+                    {
+                        "text": "<span class='cm-tables' db='DB_1'>Tablas</span>",
+                        "icon": "fa fa-table",
+                        "nodes": [
+                            {
+                            "text": "<span class='cm-table' db='BD_1'>Tabla 1</span>",
+                            "icon": "fa fa-table"
+                            },
+                            {
+                            "text": "<span class='cm-table' db='DB_1'>Tabla 2</span>",
+                            "icon": "fa fa-table"
+                            }
+                        ]
+                    },
+                    {
+                        "text": "<span class='cm-procedures' db='DB_1'>Procedimientos</span>",
+                        "icon": "fa fa-code",
+                        "nodes": [
+                            {
+                            "text": "<span class='cm-procedure' db='BD_1'>Procedimiento_1</span>",
+                            "icon": "fa fa-code"
+                            },
+                            {
+                            "text": "<span class='cm-procedure' db='DB_1'>Procedimiento_2</span>",
+                            "icon": "fa fa-code"
+                            }
+                        ]
+                    },
+                    {
+                        "text": "<span class='cm-objects' db='BD_1'>Objetos</span>",
+                        "icon": "fa fa-cube",
+                        "nodes": [
+                            {
+                            "text": "<span class='cm-object' db='BD_1'>Objeto_1</span>",
+                            "icon": "fa fa-cube"
+                            },
+                            {
+                            "text": "<span class='cm-object' db='DB_1'>Mi_objeto_2</span>",
+                            "icon": "fa fa-cube"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "BD FISQL"
+            },
+            {
+                "text": "BD 3"
+            },
+            {
+                "text": "Base de datos prueba"
+            },
+            {
+                "text": "BD prueba 5"
+            }
+    
+        ]
+    },
+     {
+
+        "text": "<span class='cm-users'>Usuarios</span>",
+        "icon": "fa fa-user",
+        "nodes" : [
+            {
+                "text": "<span class='cm-user'>Anicka</span>",
+                "icon": "fa fa-user"
+            },
+            {
+                "text": "<span class='cm-user'>Michelle</span>",
+                "icon": "fa fa-user"
+            }
+        ]
+
+    }
+
+]
     """)

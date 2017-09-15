@@ -14,9 +14,31 @@
         <div class="tab-content tab-content-full-output" id="myTreeTabContent">
             <div class="tab-pane fade show active tab-pane-item-output" id="tree-tab" role="tabpanel" aria-labelledby="tree-tab">
                 <div id="treeview12" class=""></div>
+                
+                <div id="contextMenu_databases" class="dropdown-menu" role="menu" style="display:none" >
+                    <a class="dropdown-item" tabindex="-1" href="#">Crear Base de datos</a>
+                </div>                
+                <div id="contextMenu_database" class="dropdown-menu" role="menu" style="display:none" >
+                    <a class="dropdown-item" tabindex="-1" href="#">Eliminar</a>
+                    <a class="dropdown-item" tabindex="-1" href="#">Crear script</a>
+                    <a class="dropdown-item" tabindex="-1" href="#">Backup</a>
+                    <a class="dropdown-item" tabindex="-1" href="#">Restore</a>
+                    <a class="dropdown-item" tabindex="-1" href="#">Asignar permisos</a>
+                </div>                
+                <div id="contextMenu_tables" class="dropdown-menu" role="menu" style="display:none" >
+                    <a class="dropdown-item" tabindex="-1" href="#">Crear tabla</a>
+                </div>               
+                <div id="contextMenu_table" class="dropdown-menu" role="menu" style="display:none" >
+                    <a class="dropdown-item" tabindex="-1" href="#">Asiganr permisos</a>
+                    <a class="dropdown-item" tabindex="-1" href="#">Ver data</a>
+                    <span class="divider">
+                    <a class="dropdown-item" tabindex="-1" href="#">Otra opción</a>
+                </div>
+
+
             </div>
         </div>
-    </div>
+    </div>    
 </div>
 
 <div class="div-container-right">
@@ -83,6 +105,7 @@
         </div>
     </div>
 </div>
+
 
 {% endblock content %}
 
