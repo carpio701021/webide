@@ -9,17 +9,24 @@ from .socket_client import SocketClient
 
 @csrf_exempt
 def login(request):
+    s = SocketClient()
     request.session['login'] = ''
     request.session['admin'] = ''
     if request.method == 'GET':
         return render(request, 'IDE/login.html')
     elif request.method == 'POST':
         #confirmar datos en el server
-        if( request.POST['user'] == 'admin' and request.POST['password'] == '123'):
+        if( request.POST['user'] == 'admin' and request.POST['password'] == 'admin'):
             print('Login exitoso')
             #establecer cookie
             request.session['login'] = request.POST['user']
             request.session['admin'] = 'true'
+            return redirect('index')
+        elif (s.login(request.POST['user'],request.POST['password'])):
+            print('Login exitoso')
+            #establecer cookie
+            request.session['login'] = s.user
+            request.session['admin'] = s.isAdmin
             return redirect('index')
 
     
@@ -58,7 +65,7 @@ def newReportPanelTab(request):
 def executeScript(request):
     sqlCode = request.POST['sqlcode']
     s = SocketClient()
-    respuesta = s.sendToServer( sqlCode )
+    respuesta = s.usql( sqlCode )
     #esta variable respuesta es la que debe ser parseada para generar luego el json
 
 
