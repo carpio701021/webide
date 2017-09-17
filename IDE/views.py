@@ -9,7 +9,7 @@ from .socket_client import SocketClient
 
 @csrf_exempt
 def login(request):
-    s = SocketClient()
+    server = SocketClient()
     request.session['login'] = ''
     request.session['admin'] = ''
     if request.method == 'GET':
@@ -22,12 +22,14 @@ def login(request):
             request.session['login'] = request.POST['user']
             request.session['admin'] = 'true'
             return redirect('index')
-        elif (s.login(request.POST['user'],request.POST['password'])):
-            print('Login exitoso')
-            #establecer cookie
-            request.session['login'] = s.user
-            request.session['admin'] = s.isAdmin
-            return redirect('index')
+        else:
+            resLogin = server.login( request.POST['user'],request.POST['password']) 
+            if (resLogin['resultado']):
+                print('Login exitoso')
+                #establecer cookie
+                request.session['login'] = resLogin['usuario']
+                request.session['admin'] = resLogin['isAdmin']
+                return redirect('index')
 
     
     return render(request, 'IDE/login.html', {'error': '<i class="fa fa-close"></i> Error, usuario o contraseña inválidos'})
@@ -41,9 +43,6 @@ def index(request):
     
     return render(request, 'IDE/home.html', {'user': request.session['login'], 'admin': request.session['admin']})
 
-    
-def otro(request):
-    return HttpResponse("Hola Anicka, Django web IDE en proceso :)")
 
 def newScriptPanel(request):
     numPanel = request.GET['numPanel']
@@ -64,31 +63,29 @@ def newReportPanelTab(request):
 @csrf_exempt
 def executeScript(request):
     sqlCode = request.POST['sqlcode']
-    s = SocketClient()
-    respuesta = s.usql( sqlCode )
+    server = SocketClient()
+    respuesta = server.paquete( 'usql', sqlCode )
     #esta variable respuesta es la que debe ser parseada para generar luego el json
 
 
     #aqui un json de ejemplo para la respuesta
-    return JsonResponse({
-        'salida'    : respuesta + '\n',
-        'plan'      : 'Desde el backend hasta el plan de ejecución' + '\n\n',
-        'mensajes'  : 'Desde el backend hasta los mensajes XD ' + '\n\n',
-        'historial' : 'Desde el backend hasta el historial' + '\n\n'
-    })
+    return JsonResponse(respuesta)
+    #return JsonResponse({
+    #    'salida'    : respuesta + '\n',
+    #    'plan'      : 'Desde el backend hasta el plan de ejecución' + '\n\n',
+    #    'mensajes'  : 'Desde el backend hasta los mensajes XD ' + '\n\n',
+    #    'historial' : 'Desde el backend hasta el historial' + '\n\n'
+    #})
 
 @csrf_exempt
 def executeReport(request):
     sqlCode = request.POST['sqlcode']
-    #s = SocketClient()
-    #respuesta = s.sendToServer( sqlCode )
-    #esta variable respuesta es la que debe ser parseada para generar luego el json
+    server = SocketClient()
+    respuesta = server.paquete('reporte', sqlCode )
 
 
     #aqui un json de ejemplo para la respuesta
-    return JsonResponse({
-        'resultado'    : sqlCode.replace('<usql>','<usql id="codigo nuevo">') + '\n'
-    })
+    return JsonResponse(respuesta)
 
 @csrf_exempt
 def showReport(request):
@@ -97,6 +94,9 @@ def showReport(request):
     return render(request,'IDE/reportView.html' , {'htmlcode':htmlcode})
 
 def getDbTree(request):
+    server = SocketClient()
+    respuesta = server.paquete('arbol', '' )
+    #return HttpResponse (respuesta['arbol'])
     return HttpResponse("""
 [
     {

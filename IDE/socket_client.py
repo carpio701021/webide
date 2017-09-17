@@ -1,13 +1,13 @@
 import socket
 import random
+from .ply_analyzer import PlyAnalyzer
+#import json
 
 class SocketClient:
 
     TCP_IP = '127.0.0.1'
     TCP_PORT = 9770
     BUFFER_SIZE = 1024
-    user = ''
-    isAdmin = False
 
     def sendToServer(self, message):
         try:
@@ -50,26 +50,30 @@ class SocketClient:
         res = self.sendToServer("""
             [
                 "validar": {},
-                    "login": [
-                    "comando" => ~seleccionar * de
-                    usuarios donde usuario = '{}' &&
-                    password => '{}'~
+                "login": [
+                "comando" => ~seleccionar * de usuarios donde usuario = '{}' &&
+                password => '{}'~
                 ]
             ] 
             """.format(self.getRandom(),user,passw)
         )
-        self.user = user
-        self.isAdmin = False
         # @todo falta validar user
-        return True
+        return PlyAnalyzer.analizarLogin(res)
 
-    def usql(self,codigo):
+    def paquete(self,tipo,instruccion):
         res = self.sendToServer("""
             [
                 "validar": {},
-                "paquete": "usql",
-                "instruccion": ~{}~,
+                "paquete": "{}",
+                "instruccion": ~{}~
             ] 
-            """.format(self.getRandom(),codigo))
+            """.format(self.getRandom(),tipo, instruccion))
         #analizar respuesta y devolver json con las salidas
-        return res
+        return PlyAnalyzer.analizar(res)
+
+
+
+#metodo que devuelve los nombres de tablas y metodos a utilizar
+
+
+#metodo que devuelve un arbol
