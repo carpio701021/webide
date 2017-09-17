@@ -49,10 +49,10 @@ class SocketClient:
     def login(self,user,passw):
         res = self.sendToServer("""
             [
-                "validar": {},
+                "validar": "{}",
                 "login": [
-                "comando" => ~seleccionar * de usuarios donde usuario = '{}' &&
-                password => '{}'~
+                    "usr" : "{}",
+                    "pass": "{}"
                 ]
             ] 
             """.format(self.getRandom(),user,passw)
@@ -63,7 +63,7 @@ class SocketClient:
     def paquete(self,tipo,instruccion):
         res = self.sendToServer("""
             [
-                "validar": {},
+                "validar": "{}",
                 "paquete": "{}",
                 "instruccion": ~{}~
             ] 

@@ -96,8 +96,8 @@ def showReport(request):
 def getDbTree(request):
     server = SocketClient()
     respuesta = server.paquete('arbol', '' )
-    #return HttpResponse (respuesta['arbol'])
-    return HttpResponse("""
+    return JsonResponse (respuesta)
+    '''return HttpResponse("""
 [
     {
 
@@ -105,19 +105,19 @@ def getDbTree(request):
         "icon": "fa fa-database",
         "nodes" : [
             {
-                "text": "<span class='cm-database' db='DB_1'>BD_1</span>",
+                "text": "<span class='cm-database' db='$db_id'>BD_1</span>",
                 "icon": "fa fa-database",
                 "nodes" : [
                     {
-                        "text": "<span class='cm-tables' db='DB_1'>Tablas</span>",
+                        "text": "<span class='cm-tables' db='$db_id'>Tablas</span>",
                         "icon": "fa fa-table",
                         "nodes": [
                             {
-                            "text": "<span class='cm-table' db='BD_1'>Tabla 1</span>",
+                            "text": "<span class='cm-table' db='BD_1' table='$tabla_id'>Tabla 1</span>",
                             "icon": "fa fa-table"
                             },
                             {
-                            "text": "<span class='cm-table' db='DB_1'>Tabla 2</span>",
+                            "text": "<span class='cm-table' db='DB_1' table='$table_id>Tabla 2</span>",
                             "icon": "fa fa-table"
                             }
                         ]
@@ -185,4 +185,4 @@ def getDbTree(request):
     }
 
 ]
-    """)
+    """)'''

@@ -4,19 +4,21 @@ var codeEditors = {};
 
 function updateDbTree(){
     $.get("/ide/getDbTree", function(data, status){
-        json = data;
+        var json = data['arbol'];
         var $tree = $('#treeview12').treeview({
             data: json,
             showBorder: false,
             contextMenuSelector: {
-                'cm-databases'   : '#contextMenu_databases',
-                'cm-database'   : '#contextMenu_database',
-                'cm-tables'     : '#contextMenu_tables',
-                'cm-table'      : '#contextMenu_table',
-                'cm-procedures'  : '#contextMenu_procedures',
-                'cm-procedure'  : '#contextMenu_procedure',
-                'cm-objects'     : '#contextMenu_objects',
-                'cm-object'     : '#contextMenu_object'
+                'cm-databases'   : '#cm_databases',
+                'cm-database'   : '#cm_database',
+                'cm-tables'     : '#cm_tables',
+                'cm-table'      : '#cm_table',
+                'cm-functions'  : '#cm_functions',
+                'cm-function'  : '#cm_function',
+                'cm-objects'     : '#cm_objects',
+                'cm-object'     : '#cm_object',
+                'cm-users'     : '#cm_users',
+                'cm-user'     : '#cm_user'
             },
             onContextMenu: function (invokedOn, selectedMenu) {
                 var msg = "You selected the menu item '" + selectedMenu.text() +
@@ -26,6 +28,12 @@ function updateDbTree(){
                 alert("Atributo bd: "+invokedOn.attr('db'));
             }
         });
+        var sugerencias = data['palabras_sugeridas'].split(' ');
+        sugerencias.forEach(function(item,index){
+
+        
+        });
+
     
     });
 }

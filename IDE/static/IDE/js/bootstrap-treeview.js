@@ -35,7 +35,7 @@
     
             expandIcon: 'fa fa-plus-square',
             collapseIcon: 'fa fa-minus-square',
-            emptyIcon: 'fa fa-minus-square',
+            emptyIcon: '',
             nodeIcon: '',
             selectedIcon: '',
             checkedIcon: 'fa fa-check',
