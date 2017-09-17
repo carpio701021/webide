@@ -51,9 +51,9 @@ class SocketClient:
             [
                 "validar": {},
                     "login": [
-                    "comando" => "seleccionar * de
+                    "comando" => ~seleccionar * de
                     usuarios donde usuario = '{}' &&
-                    password => '{}'"
+                    password => '{}'~
                 ]
             ] 
             """.format(self.getRandom(),user,passw)
@@ -68,7 +68,7 @@ class SocketClient:
             [
                 "validar": {},
                 "paquete": "usql",
-                "instruccion": "{}",
+                "instruccion": ~{}~,
             ] 
             """.format(self.getRandom(),codigo))
         #analizar respuesta y devolver json con las salidas
