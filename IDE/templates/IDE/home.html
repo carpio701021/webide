@@ -17,7 +17,6 @@
                 
                 <div id="cm_databases" class="dropdown-menu" role="menu" style="display:none" >
                     <a class="dropdown-item" tabindex="-1" href="#">Crear Base de datos</a>
-                    <a class="dropdown-item" tabindex="-1" href="#">Ver código</a>
                 </div>                
                 <div id="cm_database" class="dropdown-menu" role="menu" style="display:none" >
                     <a class="dropdown-item" tabindex="-1" href="#">Eliminar</a>
@@ -25,6 +24,7 @@
                     <a class="dropdown-item" tabindex="-1" href="#">Backup</a>
                     <a class="dropdown-item" tabindex="-1" href="#">Restaurar</a>
                     <a class="dropdown-item" tabindex="-1" href="#">Asignar permisos</a>
+                    <a class="dropdown-item" tabindex="-1" href="#">Ver código</a>
                 </div>                
                 <div id="cm_tables" class="dropdown-menu" role="menu" style="display:none" >
                     <a class="dropdown-item" tabindex="-1" href="#">Crear tabla</a>
@@ -35,17 +35,9 @@
                 </div>
                 <div id="cm_functions" class="dropdown-menu" role="menu" style="display:none" >
                     <a class="dropdown-item" tabindex="-1" href="#">Crear función</a>
-                </div>               
-                <div id="cm_function" class="dropdown-menu" role="menu" style="display:none" >
-                    <a class="dropdown-item" tabindex="-1" href="#">Asignar permisos</a>
-                    <a class="dropdown-item" tabindex="-1" href="#">Ver codigo</a>
-                </div>
+                </div>  
                 <div id="cm_objects" class="dropdown-menu" role="menu" style="display:none" >
                     <a class="dropdown-item" tabindex="-1" href="#">Crear objeto</a>
-                </div>               
-                <div id="cm_object" class="dropdown-menu" role="menu" style="display:none" >
-                    <a class="dropdown-item" tabindex="-1" href="#">Asignar permisos</a>
-                    <a class="dropdown-item" tabindex="-1" href="#">Ver codigo</a>
                 </div>
                 <div id="cm_users" class="dropdown-menu" role="menu" style="display:none" >
                     <a class="dropdown-item" tabindex="-1" href="#">Crear Usuario</a>
@@ -124,6 +116,52 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Modal crear base de datos -->
+<div class="modal fade" id="modal_cm_crear_bd" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Crear base de datos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- inicia contenido-->
+                <form>
+                    <div class="form-group">
+                        Nombre:
+                        <input type="text" class="form-control" id="cm_crear_bd_nombre">
+                    </div>
+                </form>
+                <!-- termina contenido-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button onclick="cm_crear_bd()" type="button" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- Modal Eliminar bd -->
+  <!-- Modal  crear script bd-->
+  <!-- Modal  backup bd -->
+  <!-- Modal  restore bd-->
+  <!-- Modal  asignar permisos bd-->
+  <!-- Modal  crear tabla-->
+  <!-- Modal  asignar permisos tabla-->
+  <!-- Modal  ver data tabla-->
+  <!-- Modal  crear funcion -->
+  <!-- Modal  crear objeto -->
+  <!-- Modal  crear usuario -->
+  <!-- Modal  eliminar usuario -->
+  <!-- Modal  graficar tabla -->
+  <!-- Modal  guardar historial -->
+  <!-- Modal  -->
 
 
 {% endblock content %}

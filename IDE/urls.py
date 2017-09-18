@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^executeScript$', views.executeScript, name='executeScript'),
     url(r'^executeReport$', views.executeReport, name='executeReport'),
     url(r'^showReport$', views.showReport, name='showReport'),
+    url(r'^getCodigo$', views.getCodigo, name='getCodigo'),
 ]

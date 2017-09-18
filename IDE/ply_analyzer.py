@@ -33,7 +33,7 @@ class PlyAnalyzer:
                 'resultado'    : respuesta.replace('<usql>','<usql id="codigo nuevo">') + '\n'
             }
         elif '"paquete": "arbol",' in respuesta:
-            arbolSimulado = """{
+            arbol_txt = """{
 	"databases": [
 		{
 			"database_id": "base_1",
@@ -72,12 +72,12 @@ class PlyAnalyzer:
 		"admin","anicka","michelle","byron"
 	]
 }"""
-            arbol_txt = PlyAnalyzer.generarArbol_cm(arbolSimulado)
-            palabras_sugeridas = PlyAnalyzer.palabras_sugeridas(arbolSimulado)
-            print (palabras_sugeridas)
+
+
+            #print (palabras_sugeridas)
             return {
-                'arbol'    : arbol_txt,
-                'tables'         : palabras_sugeridas
+                'arbol'    : PlyAnalyzer.generarArbol_cm(arbol_txt),
+                'tables'   : PlyAnalyzer.palabras_sugeridas(arbol_txt)
             }
         elif '"paquete": "",' in respuesta:
             return 'vacio'
@@ -88,44 +88,34 @@ class PlyAnalyzer:
     def palabras_sugeridas(json_txt):
         jsdb = json.loads(json_txt)
         palabras_sugeridas = ''
-        jsdatabases = {}
-        jsdatabase = {}
-        jstables= {}
-        jscolumns= {}
-        jsfunctions= {}
-        jsobjects= {}
-        jsusers= {}
+        jsres = {}
+
         for database in jsdb['databases']:
             palabras_sugeridas += ' '
             palabras_sugeridas += database['database_id']
+            jsres[database['database_id']]= {}
             for table in database['tables'] :
                 palabras_sugeridas += ' '
                 palabras_sugeridas += table['table_id']
+                jsres[table['table_id']]= {}
                 for column in table['columns'] :
                     palabras_sugeridas += ' '
                     palabras_sugeridas += column
-                    jscolumns = {
-                        
-                    }
+                    jsres[column]= {}
             for function in database['functions'] :
                 palabras_sugeridas += ' '
                 palabras_sugeridas += function
+                jsres[function]= {}
             for nobject in database['objects'] :
                 palabras_sugeridas += ' '
                 palabras_sugeridas += nobject
-            jsdatabases = {
-
-            }
+                jsres[nobject]= {}
         for user in jsdb['users']:
             palabras_sugeridas += ' '
             palabras_sugeridas += user
+            jsres[user]= {}
 
-            
-        jsres = {
-            "databases": "",
-            "users" : ""
-        }
-        return palabras_sugeridas
+        return jsres
 
     @staticmethod
     def generarArbol_cm(json_txt):
@@ -180,7 +170,7 @@ class PlyAnalyzer:
             #abre functions
             jstree += """
                     {
-                        "text": "<span class='cm-procedures' db='$database_id'>Funciones</span>",
+                        "text": "<span class='cm-functions' db='$database_id'>Funciones</span>",
                         "icon": "fa fa-code",
                         "nodes": [""".replace("$database_id",database['database_id'])
             

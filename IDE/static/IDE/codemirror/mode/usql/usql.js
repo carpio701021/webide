@@ -280,7 +280,7 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
   CodeMirror.defineMIME("text/usql", {
     name: "sql",
     client: set("t_direccion clear connect edit ego exit go help nopager notee nowarning pager print prompt quit rehash source status system tee"),
-    keywords: set("crear tabla objeto union llave_primaria llave_foranea base_datos único procedimiento funcion retorno usuario colocar password usar alterar altero agregar quitar cambiar eliminar insertar en valores actualizar donde borrar seleccionar de ordenar_por asc desc otorgar permisos denegar declarar si sino selecciona caso defecto para mientras detener imprimir fecha fecha_hora contar backup usqldump completo restaurar"),
+    keywords: set("crear tabla objeto union llave_primaria llave_foranea base_datos unico procedimiento funcion retorno usuario colocar password usar alterar altero agregar quitar cambiar eliminar insertar en valores actualizar donde borrar seleccionar de ordenar_por asc desc otorgar permisos denegar declarar si sino selecciona caso defecto para mientras detener imprimir fecha fecha_hora contar backup usqldump completo restaurar"),
     builtin: set("text integer double bool date datetime char"),
     atoms: set("no nulo"),
     operatorChars: /^[*+\-%<>!=&|^]/,
