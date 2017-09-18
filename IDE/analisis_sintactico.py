@@ -14,6 +14,7 @@ def p_plycs(p):
     e.ejecucion =  p[12]
     e.mensaje =  p[16]
     e.historial = p[20] 
+    e.tipo = 'usql'
     p[0] = e
         
 # Error rule for syntax errors

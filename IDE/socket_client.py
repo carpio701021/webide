@@ -27,11 +27,11 @@ class SocketClient:
             r = s.recv(self.BUFFER_SIZE)
             if b'$$$$$$$$$$' in r:
                 break
-            print(r)
+            #print(r)
             data += r
 
         reciv = data.decode(encoding='UTF-8')
-        print('Respuesta recibida: $$\n'+reciv+'\n$$')
+        #print('Respuesta recibida: $$\n'+reciv+'\n$$')
         s.close()
         return reciv
         '''except:
@@ -67,6 +67,9 @@ class SocketClient:
         return PlyAnalyzer.analizarLogin(res,'login')
 
     def paquete(self,tipo,instruccion):
+        print(tipo)
+        if tipo == "arbol":
+            return PlyAnalyzer.analizar('res',tipo)
         res = self.sendToServer("""
             [
                 "validar": "{}",
@@ -75,7 +78,8 @@ class SocketClient:
             ] 
             """.format(self.getRandom(),tipo, instruccion))
         #analizar respuesta y devolver json con las salidas
-        return PlyAnalyzer.analizar(res,instruccion)
+        print ("res: "+res)
+        return PlyAnalyzer.analizar(res,tipo)
 
 
 

@@ -17,12 +17,20 @@ class PlyAnalyzer:
 
    
     @staticmethod
-    def analizar(respuesta,instruccion):
-        if instruccion is 'usql':
+    def analizar(respuesta,tipo):
+        print (tipo)
+        print (tipo== 'usql')
+        if tipo == 'usql':
         
             #aqui se analiza
-            a = parser.parse(respuesta)
-            if a:
+            #a = parser.parse(respuesta)
+            
+            x = json.loads(respuesta)
+            print (x)
+            
+            #print(x)
+
+            '''if a:
                 print('si tiene info')
                 print(a.datos)
                 print(a.ejecucion)
@@ -30,31 +38,27 @@ class PlyAnalyzer:
                 print(a.historial)
             else:
                 print(a)
-                print('No tiene info')
+                print('No tiene info')'''
 
 
         ##pruebas que estoy haciendo
         ##si es de tipo login
         #if '"paquete": "usql",' in respuesta :
             return {
-                'salida'    : a.datos + '\n',
-                'plan'      : a.ejecucion + '\n\n',
-                'mensajes'  : a.mensaje + '\n\n',
-                'historial' : a.historial + '\n\n'
+                'salida'    : x['datos'] + '\n',
+                'plan'      : x['ejecucion'] + '\n\n',
+                'mensajes'  : x['mensaje'] + '\n\n',
+                'historial' : x['historial'] + '\n\n'
             }
         
-        if instruccion is 'reporte':
+        if tipo == 'reporte':
             return {
-                'resultado'    : respuesta.replace('<usql>','<usql id="codigo nuevo">') + '\n'
+                'resultado'    :  json.loads(respuesta)['datos'] + '\n'
             }
-<<<<<<< HEAD
         
-        if instruccion is 'arbol':
-            arbolSimulado = """{
-=======
-        elif '"paquete": "arbol",' in respuesta:
+        if tipo == 'arbol':
             arbol_txt = """{
->>>>>>> 74482acc6fca0d9969224cd796104a05568a4975
+
 	"databases": [
 		{
 			"database_id": "base_1",

@@ -4,4 +4,4 @@ class Paquete():
         self.ejecucion = ''
         self.mensaje = ''
         self.historial = ''
-    
+        self.tipo = ''

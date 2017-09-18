@@ -107,7 +107,7 @@ def showReport(request):
 def getDbTree(request):
     server = SocketClient()
     respuesta = server.paquete('arbol', '' )
-    return JsonResponse ({"respuesta":respuesta})
+    return JsonResponse ( respuesta)
     '''return HttpResponse("""
 [
     {
