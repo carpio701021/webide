@@ -1,3 +1,4 @@
+import sys
 import socket
 import random
 from .ply_analyzer import PlyAnalyzer
@@ -10,26 +11,30 @@ class SocketClient:
     BUFFER_SIZE = 1024
 
     def sendToServer(self, message):
-        try:
-            #levantar cliente
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((self.TCP_IP, self.TCP_PORT))
-            #enviar mensaje
-            s.sendall((message+"\n").encode(encoding='UTF-8'))
-            s.sendall(('$*@n!ck@*$\n'.encode(encoding='utf_8')))
+        #try:
+        #levantar cliente
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((self.TCP_IP, self.TCP_PORT))
+        #enviar mensaje
+        s.sendall((message+"\n").encode(encoding='UTF-8'))
+        s.sendall(('$*@n!ck@*$\n'.encode(encoding='utf_8')))
 
-            #recibir mensaje
-            data = ''
-            while True:
-                r = s.recv(self.BUFFER_SIZE)
-                if r[:10] == '$*@n!ck@*$':
-                    break
-                data += r
+        #recibir mensaje
+        data = bytes()
+        lineas = 0
+        while True:
+            lineas +=1
+            r = s.recv(self.BUFFER_SIZE)
+            if b'$$$$$$$$$$' in r:
+                break
+            print(r)
+            data += r
 
-            print('Respuesta recibida: $$\n'+data+'\n$$')
-            s.close()
-            return data.decode(encoding='UTF-8')
-        except:
+        reciv = data.decode(encoding='UTF-8')
+        print('Respuesta recibida: $$\n'+reciv+'\n$$')
+        s.close()
+        return reciv
+        '''except:
             print('No se pudo comunicar con servidor. Mensaje a enviar:')
             print(message)
             return """
@@ -41,7 +46,8 @@ class SocketClient:
                     {}
                 ]
             ] 
-            """.format(message)
+            """.format(message)'''
+            
 
     def getRandom(self):
         return random.randrange(1000,9999)
@@ -58,7 +64,7 @@ class SocketClient:
             """.format(self.getRandom(),user,passw)
         )
         # @todo falta validar user
-        return PlyAnalyzer.analizarLogin(res)
+        return PlyAnalyzer.analizarLogin(res,'login')
 
     def paquete(self,tipo,instruccion):
         res = self.sendToServer("""
@@ -69,7 +75,7 @@ class SocketClient:
             ] 
             """.format(self.getRandom(),tipo, instruccion))
         #analizar respuesta y devolver json con las salidas
-        return PlyAnalyzer.analizar(res)
+        return PlyAnalyzer.analizar(res,instruccion)
 
 
 

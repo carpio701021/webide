@@ -1,12 +1,14 @@
 import socket
 import random
 import json
+from IDE.analisis_sintactico import parser
+from IDE.Paquete import Paquete
 
 class PlyAnalyzer:
 
     
     @staticmethod
-    def analizarLogin(respuesta):
+    def analizarLogin(respuesta,instruccion):
         
         #aqui se analiza
 
@@ -15,24 +17,38 @@ class PlyAnalyzer:
 
    
     @staticmethod
-    def analizar(respuesta):
+    def analizar(respuesta,instruccion):
+        if instruccion is 'usql':
         
-        #aqui se analiza
+            #aqui se analiza
+            a = parser.parse(respuesta)
+            if a:
+                print('si tiene info')
+                print(a.datos)
+                print(a.ejecucion)
+                print(a.mensaje)
+                print(a.historial)
+            else:
+                print(a)
+                print('No tiene info')
+
 
         ##pruebas que estoy haciendo
         ##si es de tipo login
-        if '"paquete": "usql",' in respuesta :
+        #if '"paquete": "usql",' in respuesta :
             return {
-                'salida'    : respuesta + '\n',
-                'plan'      : 'Desde el backend hasta el plan de ejecucion' + '\n\n',
-                'mensajes'  : 'Desde el backend hasta los mensajes XD ' + '\n\n',
-                'historial' : 'Desde el backend hasta el historial' + '\n\n'
+                'salida'    : a.datos + '\n',
+                'plan'      : a.ejecucion + '\n\n',
+                'mensajes'  : a.mensaje + '\n\n',
+                'historial' : a.historial + '\n\n'
             }
-        elif '"paquete": "reporte",' in respuesta:
+        
+        if instruccion is 'reporte':
             return {
                 'resultado'    : respuesta.replace('<usql>','<usql id="codigo nuevo">') + '\n'
             }
-        elif '"paquete": "arbol",' in respuesta:
+        
+        if instruccion is 'arbol':
             arbolSimulado = """{
 	"databases": [
 		{
