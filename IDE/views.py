@@ -10,6 +10,7 @@ from .socket_client import SocketClient
 @csrf_exempt
 def login(request):
     server = SocketClient()
+    print(server.sendToServer('[ "paquete":"fin"]')) #aqui se cierra la sesion
     request.session['login'] = ''
     request.session['admin'] = ''
     if request.method == 'GET':
@@ -89,6 +90,13 @@ def executeReport(request):
 
     #aqui un json de ejemplo para la respuesta
     return JsonResponse(respuesta)
+
+@csrf_exempt
+def getCodigo(request):
+    nombre = request.GET['nombre']
+    server = SocketClient()
+    respuesta = server.paquete('get_codigo_bd', nombre )
+    return JsonResponse({'codigo' : respuesta})
 
 @csrf_exempt
 def showReport(request):
