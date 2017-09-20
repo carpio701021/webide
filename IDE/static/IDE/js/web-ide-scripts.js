@@ -268,15 +268,15 @@ $('#btnNewReportEditor').click(function() {
 // manda el codigo de un editor a ser analizado y devuelve la respuesta a los outputs
 function executeReport(reportPanelNum){
     
-        var iDiv = document.createElement('div');
-        iDiv.innerHTML = codeEditors['txtReport'+reportPanelNum].getValue();
-        var usql = iDiv.querySelector("usql");
+        //var iDiv = document.createElement('div');
+        //iDiv.innerHTML = codeEditors['txtReport'+reportPanelNum].getValue();
+        //var usql = iDiv.querySelector("usql");
         //var nDiv = iDiv.querySelector("usql").innerHTML(json_respuesta['resultado'])
     
         $.post("/ide/executeReport", 
         {
             reportPanelNum: reportPanelNum,
-            sqlcode: usql.innerHTML
+            sqlcode:codeEditors['txtReport'+reportPanelNum].getValue()// usql.innerHTML
         })
             .done(function(json_respuesta, status){
                 iDiv.querySelector("usql").innerHTML = json_respuesta['resultado'];

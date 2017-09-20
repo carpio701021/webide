@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COR_A COR_C DPTOS COMA PAQUETE DATOS EJECUCION MENSAJE HISTORIAL CADENAplycs : COR_A PAQUETE  DPTOS CADENA COMA DATOS DPTOS CADENA COMA EJECUCION  DPTOS CADENA COMA MENSAJE  DPTOS CADENA COMA HISTORIAL  DPTOS CADENA COR_C'
+_lr_signature = 'COR_A COR_C DPTOS LOGIN USR CADENAplycs : COR_A LOGIN DPTOS CADENA USR DPTOS CADENA  COR_C'
     
-_lr_action_items = {'COR_A':([0,],[2,]),'$end':([1,22,],[0,-1,]),'PAQUETE':([2,],[3,]),'DPTOS':([3,7,11,15,19,],[4,8,12,16,20,]),'CADENA':([4,8,12,16,20,],[5,9,13,17,21,]),'COMA':([5,9,13,17,],[6,10,14,18,]),'DATOS':([6,],[7,]),'EJECUCION':([10,],[11,]),'MENSAJE':([14,],[15,]),'HISTORIAL':([18,],[19,]),'COR_C':([21,],[22,]),}
+_lr_action_items = {'COR_A':([0,],[2,]),'$end':([1,9,],[0,-1,]),'LOGIN':([2,],[3,]),'DPTOS':([3,6,],[4,7,]),'CADENA':([4,7,],[5,8,]),'USR':([5,],[6,]),'COR_C':([8,],[9,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -26,5 +26,5 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> plycs","S'",1,None,None,None),
-  ('plycs -> COR_A PAQUETE DPTOS CADENA COMA DATOS DPTOS CADENA COMA EJECUCION DPTOS CADENA COMA MENSAJE DPTOS CADENA COMA HISTORIAL DPTOS CADENA COR_C','plycs',21,'p_plycs','analisis_sintactico.py',10),
+  ('plycs -> COR_A LOGIN DPTOS CADENA USR DPTOS CADENA COR_C','plycs',8,'p_plycs','analisis_sintactico_usr.py',10),
 ]

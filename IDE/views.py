@@ -10,7 +10,8 @@ from .socket_client import SocketClient
 @csrf_exempt
 def login(request):
     server = SocketClient()
-    print(server.sendToServer('[ "paquete":"fin"]')) #aqui se cierra la sesion
+    numRan = server.getRandom()
+    print(server.sendToServer('[ "validar": "{}" , "paquete":"fin"]'.format(numRan))) #aqui se cierra la sesion
     request.session['login'] = ''
     request.session['admin'] = ''
     if request.method == 'GET':

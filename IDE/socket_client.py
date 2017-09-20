@@ -68,8 +68,8 @@ class SocketClient:
 
     def paquete(self,tipo,instruccion):
         print(tipo)
-        if tipo == "arbol":
-            return PlyAnalyzer.analizar('res',tipo)
+        #if tipo == "arbol":
+         #   return PlyAnalyzer.analizar('res',tipo)
         res = self.sendToServer("""
             [
                 "validar": "{}",
