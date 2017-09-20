@@ -1,79 +1,76 @@
 import socket
 import random
 import json
+from IDE.analisis_sintactico_usr import parser
+from IDE.Login import Login
 
 class PlyAnalyzer:
 
     
     @staticmethod
-    def analizarLogin(respuesta):
+    def analizarLogin(respuesta,instruccion):
         
+        res= True
+        estado= ''
+        usr= ''
         #aqui se analiza
+        #a= parser.parse('[login:"True"  usr:"Anicka"]')
+        a= parser.parse(respuesta)
+        if (a):
+            estado = a.estado
+            usr = a.usr
+            print('trae informacion')
+        else:
+            print('No trae informacion')
 
+    
+        estado= estado.replace('"','')
+        usr= usr.replace('"','')
+        print(estado)
+        print(usr)
+
+        if (estado=='True'):
+            res=True
+        else:
+            res=False
+
+        print(res)
         ##pruebas que estoy haciendo
-        return { 'resultado': True, 'usuario': 'user', 'isAdmin': False }
+        return { 'resultado': res, 'usuario': usr, 'isAdmin': False }
 
    
     @staticmethod
-    def analizar(respuesta):
+    def analizar(respuesta,tipo):
+        print (tipo)
+        print (tipo== 'usql')
+        if tipo == 'usql':
         
-        #aqui se analiza
+            #aqui se analiza
+            #a = parser.parse(respuesta)
+            #print(respuesta)    
+            x = json.loads(respuesta)
+            print (x)
+            
 
         ##pruebas que estoy haciendo
         ##si es de tipo login
-        if '"paquete": "usql",' in respuesta :
+        #if '"paquete": "usql",' in respuesta :
             return {
-                'salida'    : respuesta + '\n',
-                'plan'      : 'Desde el backend hasta el plan de ejecucion' + '\n\n',
-                'mensajes'  : 'Desde el backend hasta los mensajes XD ' + '\n\n',
-                'historial' : 'Desde el backend hasta el historial' + '\n\n'
+                'salida'    : x['datos'] + '\n',
+                'plan'      : x['ejecucion'] + '\n\n',
+                'mensajes'  : x['mensaje'] + '\n\n',
+                'historial' : x['historial'] + '\n\n'
             }
-        elif '"paquete": "reporte",' in respuesta:
+        
+        if tipo == 'reporte':
             return {
-                'resultado'    : respuesta.replace('<usql>','<usql id="codigo nuevo">') + '\n'
+                'resultado'    :  json.loads(respuesta)['datos'] + '\n'
             }
-        elif '"paquete": "arbol",' in respuesta:
-            arbol_txt = """{
-	"databases": [
-		{
-			"database_id": "base_1",
-			"tables": [
-				{
-					"table_id": "tabla_1",
-					"columns": [
-						"columna1", "columna2","columna3","columna4"
-					]
-				},
-				{
-					"table_id": "tabla_2",
-					"columns": [
-						"columna1", "columna2","columna3","columna4"
-					]
-				}
-			],
-			"functions": ["funcion1","funcion2","funcionX"],
-			"objects": ["obj1","obj2","superobjeto"]
-		},
-		{
-			"database_id": "FISQL_DB",
-			"tables": [
-				{
-					"table_id": "tabla_prueba",
-					"columns": [
-						"columna1", "columna2","columna3","columna4"
-					]
-				}
-			],
-			"functions": ["funcion1","funcion2","funcionX"],
-			"objects": ["obj1","obj2","superobjeto"]
-		}
-	],
-	"users": [
-		"admin","anicka","michelle","byron"
-	]
-}"""
-
-
+        
+        if tipo == 'arbol':
+            arbol_txt = respuesta
+            print('request from tree')
+            print(respuesta)
             #print (palabras_sugeridas)
             return {
                 'arbol'    : PlyAnalyzer.generarArbol_cm(arbol_txt),

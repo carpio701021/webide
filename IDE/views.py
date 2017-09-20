@@ -10,7 +10,8 @@ from .socket_client import SocketClient
 @csrf_exempt
 def login(request):
     server = SocketClient()
-    print(server.sendToServer('[ "paquete":"fin"]')) #aqui se cierra la sesion
+    numRan = server.getRandom()
+    print(server.sendToServer('[ "validar": "{}" , "paquete":"fin"]'.format(numRan))) #aqui se cierra la sesion
     request.session['login'] = ''
     request.session['admin'] = ''
     if request.method == 'GET':
@@ -66,11 +67,14 @@ def executeScript(request):
     sqlCode = request.POST['sqlcode']
     server = SocketClient()
     respuesta = server.paquete( 'usql', sqlCode )
+    #a = parser.parse('[paquete: "c1", datos: "c2", ejecucion: "c3", mensaje: "c4", historial: "c5"]')
+
+    
     #esta variable respuesta es la que debe ser parseada para generar luego el json
 
 
     #aqui un json de ejemplo para la respuesta
-    return JsonResponse(respuesta)
+    return JsonResponse(respuesta,safe=False)
     #return JsonResponse({
     #    'salida'    : respuesta + '\n',
     #    'plan'      : 'Desde el backend hasta el plan de ejecución' + '\n\n',
@@ -104,7 +108,7 @@ def showReport(request):
 def getDbTree(request):
     server = SocketClient()
     respuesta = server.paquete('arbol', '' )
-    return JsonResponse (respuesta)
+    return JsonResponse ( respuesta)
     '''return HttpResponse("""
 [
     {

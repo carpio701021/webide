@@ -1,0 +1,93 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> plycs
+Rule 1     plycs -> COR_A LOGIN DPTOS CADENA USR DPTOS CADENA COR_C
+
+Terminals, with rules where they appear
+
+CADENA               : 1 1
+COR_A                : 1
+COR_C                : 1
+DPTOS                : 1 1
+LOGIN                : 1
+USR                  : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+plycs                : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . plycs
+    (1) plycs -> . COR_A LOGIN DPTOS CADENA USR DPTOS CADENA COR_C
+
+    COR_A           shift and go to state 2
+
+    plycs                          shift and go to state 1
+
+state 1
+
+    (0) S' -> plycs .
+
+
+
+state 2
+
+    (1) plycs -> COR_A . LOGIN DPTOS CADENA USR DPTOS CADENA COR_C
+
+    LOGIN           shift and go to state 3
+
+
+state 3
+
+    (1) plycs -> COR_A LOGIN . DPTOS CADENA USR DPTOS CADENA COR_C
+
+    DPTOS           shift and go to state 4
+
+
+state 4
+
+    (1) plycs -> COR_A LOGIN DPTOS . CADENA USR DPTOS CADENA COR_C
+
+    CADENA          shift and go to state 5
+
+
+state 5
+
+    (1) plycs -> COR_A LOGIN DPTOS CADENA . USR DPTOS CADENA COR_C
+
+    USR             shift and go to state 6
+
+
+state 6
+
+    (1) plycs -> COR_A LOGIN DPTOS CADENA USR . DPTOS CADENA COR_C
+
+    DPTOS           shift and go to state 7
+
+
+state 7
+
+    (1) plycs -> COR_A LOGIN DPTOS CADENA USR DPTOS . CADENA COR_C
+
+    CADENA          shift and go to state 8
+
+
+state 8
+
+    (1) plycs -> COR_A LOGIN DPTOS CADENA USR DPTOS CADENA . COR_C
+
+    COR_C           shift and go to state 9
+
+
+state 9
+
+    (1) plycs -> COR_A LOGIN DPTOS CADENA USR DPTOS CADENA COR_C .
+
+    $end            reduce using rule 1 (plycs -> COR_A LOGIN DPTOS CADENA USR DPTOS CADENA COR_C .)
+
