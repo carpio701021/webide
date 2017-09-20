@@ -205,7 +205,7 @@ class PlyAnalyzer:
                 jstree += """
                             {
                             "text": "<span class='cm-object' db='$database_id' object='$nobject'>$nobject</span>",
-                            "icon": "fa fa-code"
+                            "icon": "fa fa-cube"
                             }""".replace("$database_id",database['database_id']).replace("$nobject",nobject)
             #cierra objects
             jstree +="""

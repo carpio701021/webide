@@ -266,10 +266,15 @@ $('#btnNewReportEditor').click(function() {
 
 // manda el codigo de un editor a ser analizado y devuelve la respuesta a los outputs
 function executeReport(reportPanelNum){
+
+    var iDiv = document.createElement('div');
+    iDiv.innerHTML = codeEditors['txtReport'+reportPanelNum].getValue();
+    var usql = iDiv.querySelector("usql");
+
     $.post("/ide/executeReport", 
     {
         reportPanelNum: reportPanelNum,
-        sqlcode: codeEditors['txtReport'+reportPanelNum].getValue()
+        sqlcode: usql.innerHTML
     })
         .done(function(json_respuesta, status){
             codeEditors['txtReport'+reportPanelNum+'_results'].setValue(json_respuesta['resultado']);
