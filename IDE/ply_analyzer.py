@@ -187,6 +187,30 @@ class PlyAnalyzer:
                         ]
                     },"""
             
+            #abre procedures
+            jstree += """
+                    {
+                        "text": "<span class='cm-procedures' db='$database_id'>Procedimientos</span>",
+                        "icon": "fa fa-code",
+                        "nodes": [""".replace("$database_id",database['database_id'])
+            
+            contadorprocedure = 0
+            for procedure in database['procedures'] : 
+                if contadorprocedures > 0 :
+                    jstree += ","
+                contadorprocedures += 1
+                jstree += """
+                            {
+                            "text": "<span class='cm-procedure' db='$database_id' procedure='$procedure_id'>$procedure_id</span>",
+                            "icon": "fa fa-code"
+                            }""".replace("$database_id",database['database_id']).replace("$procedure_id",procedure)
+
+            #cierra procedures
+            jstree +="""
+                        ]
+                    },"""
+            
+
             #abre objects
             jstree += """
                     {
@@ -208,6 +232,8 @@ class PlyAnalyzer:
             jstree +="""
                         ]
                     }"""
+
+            
 
             #cierra database
             jstree +="""
