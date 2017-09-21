@@ -2,6 +2,8 @@ var scriptPanelCounter = 0;
 var reportPanelCounter = 0;
 var codeEditors = {};
 var hintObj =  { anicka : {}, cercado : {} };
+var campos_crear_tabla = [];
+var campos_crear_objeto = [];
 
 
 var fun_on_contextmenu = function (invokedOn, selectedMenu) {
@@ -25,101 +27,170 @@ var fun_on_contextmenu = function (invokedOn, selectedMenu) {
                 newScriptEditor(null,codigo);
             }
             if ( selectedMenu.text()=='Crear script'){
-                //implementar
+                var codigo = 'USAR ' + invokedOn.attr('db') + ';\n\n # Todo el codigo aqui\n\n';
+                newScriptEditor(null,codigo);
             }
             if ( selectedMenu.text()=='Backup'){
-                //implementar
+                var codigo = 'BACKUP << USQLDUMP | COMPLETO >> ' + invokedOn.attr('db') + ';\n\n';
+                newScriptEditor(null,codigo);
             }
             if ( selectedMenu.text()=='Restaurar'){
-                //implementar
+                var codigo = 'RESTAURAR << USQLDUMP | COMPLETO >> "#*Ruta del archivo*#";\n\n';
+                newScriptEditor(null,codigo);
             }
-            if ( selectedMenu.text()=='Asignar permisos'){
-                //implementar
-            }
+            if ( selectedMenu.text()=='Asignar permisos'){  }
             if ( selectedMenu.text()=='Ver código'){
                 getCodigo( invokedOn.attr('db') );
             }
         } else if (invokedOn.attr('class')=='cm-tables'){
             if ( selectedMenu.text()=='Crear tabla'){
-                //implementar
+                campos_crear_tabla = [];
+                $("#cm_crear_tabla_campos").empty();
+                $('#modal_cm_crear_tabla').modal('show');
             }
         } else if (invokedOn.attr('class')=='cm-table'){    
-            if ( selectedMenu.text()=='Asignar permisos'){
-                //implementar
-            } 
+            if ( selectedMenu.text()=='Asignar permisos'){        } 
             if ( selectedMenu.text()=='Ver data'){
-                //implementar
+                var codigo = 'USAR ' + invokedOn.attr('db') + ';\n\n';
+                codigo += 'SELECCIONAR * DE ' + invokedOn.attr('table') + ';';
+                newScriptEditor(null,codigo);
             }
         } else if (invokedOn.attr('class')=='cm-functions'){ 
             if ( selectedMenu.text()=='Crear función'){
-                //implementar
+                var codigo = 'USAR ' + invokedOn.attr('db') + ';\n\n'
+                + 'CREAR FUNCION <<nombre>> ( <<parametros>> ) <<tipo_dato_retorno>> { \n\n\t' 
+                + '#Sentencias' + "\n\n\n"
+                + '}\n\n';
+                newScriptEditor(null,codigo);
+            }
+
+        } else if (invokedOn.attr('class')=='cm-procedures'){ 
+            if ( selectedMenu.text()=='Crear procedimiento'){
+                var codigo = 'USAR ' + invokedOn.attr('db') + ';\n\n'
+                + 'CREAR PROCEDIMIENTO <<nombre>> ( <<parametros>> ) { \n\n\t' 
+                + '#Sentencias' + "\n\n\n"
+                + '}\n\n';
+                newScriptEditor(null,codigo);
             }
             
-        } else if (invokedOn.attr('class')=='cm-function'){
             
+        } else if (invokedOn.attr('class')=='cm-function'){            
         } else if (invokedOn.attr('class')=='cm-objects'){
             if ( selectedMenu.text()=='Crear objeto'){
-                //implementar
+                campos_crear_objeto = [];
+                $("#cm_crear_objeto_campos").empty();
+                $('#modal_cm_crear_objeto').modal('show');
             }
             
-        } else if (invokedOn.attr('class')=='cm-object'){
-            
+        } else if (invokedOn.attr('class')=='cm-object'){            
         } else if (invokedOn.attr('class')=='cm-users'){
             if ( selectedMenu.text()=='Crear Usuario'){
-                //implementar
+                $('#modal_cm_crear_usuario').modal('show');
             }
             
         } else if (invokedOn.attr('class')=='cm-user'){
             if ( selectedMenu.text()=='Eliminar Usuario'){
-                //implementar
+                var codigo = 'ELIMINAR USUARIO ' + invokedOn.attr('user') + ';';
+                newScriptEditor(null,codigo);
             }
             
         }
 
 };
-function cm_crear_bd (invokedOn, selectedMenu) {
+function cm_crear_bd () {
     var codigo = 'CREAR BASE_DATOS ' + cm_crear_bd_nombre.value + ';';
     newScriptEditor(null,codigo);
     $('#modal_cm_crear_bd').modal('hide');
 }
-function cm_eliminar_bd (invokedOn, selectedMenu) {
+function cm_asignar_permisos_bd () {
 
 }
-function cm_crear_script_bd (invokedOn, selectedMenu) {
+function cm_crear_tabla_agregar_campo(){
+    var n_campo = { 
+        nombre_campo        : cm_crear_tabla_nombre_campo.value,
+        tipo                : $('#cm_crear_tabla_tipo_dato').find(":selected").val(),
+        nulo                : cm_crear_tabla_comp_nulo.checked,
+        autoncrementable    : cm_crear_tabla_comp_autoincrementable.checked ,
+        primaria            : cm_crear_tabla_comp_primaria.checked,
+        foranea             : cm_crear_tabla_comp_foranea.checked,
+        unico               : cm_crear_tabla_comp_unico.checked
+    };
+    campos_crear_tabla.push(n_campo);
+   
+    $("#cm_crear_tabla_campos").append(new Option(
+        n_campo.tipo + " " + n_campo.nombre_campo 
+        + ((n_campo.nulo)?" NULO" :" NO NULO")
+        + ((n_campo.autoincrementable)?" AUTOINCREMENTABLE" :"")
+        + ((n_campo.primaria)?" PRIMARIA" :"")
+        + ((n_campo.foranea)?" FORANEA <<tabla_foranea>> <<campo_foraneo>>" :"")
+        + ((n_campo.unico)?" UNICO" :"")
+        , n_campo.nombre_campo))
+        ;
+    //limpiar selecciones
+    cm_crear_tabla_nombre_campo.value = "";
+    cm_crear_tabla_comp_nulo.checked = false;
+    cm_crear_tabla_comp_autoincrementable.checked = false;
+    cm_crear_tabla_comp_primaria.checked = false;
+    cm_crear_tabla_comp_foranea.checked = false;
+    cm_crear_tabla_comp_unico.checked = false;
+}
+function cm_crear_tabla () {
+    var codigo = 'CREAR TABLA ' + cm_crear_tabla_nombre.value + ' (\n\t';
+    for( var i = 0; i < campos_crear_tabla.length ; i++){
+        if(i>0) codigo += ",\n\t";
+        codigo += campos_crear_tabla[i].tipo + " " + campos_crear_tabla[i].nombre_campo 
+        + ((campos_crear_tabla[i].nulo)?" NULO" :" NO NULO")
+        + ((campos_crear_tabla[i].autoincrementable)?" AUTOINCREMENTABLE" :"")
+        + ((campos_crear_tabla[i].primaria)?" PRIMARIA" :"")
+        + ((campos_crear_tabla[i].foranea)?" FORANEA <<tabla_foranea>> <<campo_foraneo>>" :"")
+        + ((campos_crear_tabla[i].unico)?" UNICO" :"") ;
+    }
+    codigo += "\n);";
+
+    //aqui los campos
+    newScriptEditor(null,codigo);
+    $('#modal_cm_crear_tabla').modal('hide');
+}
+function cm_crear_objeto_agregar_campo(){
+    var n_campo = { 
+        nombre_campo        : cm_crear_objeto_nombre_campo.value,
+        tipo                : $('#cm_crear_objeto_tipo_dato').find(":selected").val()
+    };
+    campos_crear_objeto.push(n_campo);
+   
+    $("#cm_crear_objeto_campos").append(new Option(
+        n_campo.tipo + " " + n_campo.nombre_campo 
+        , n_campo.nombre_campo))
+        ;
+    //limpiar selecciones
+    cm_crear_objeto_nombre_campo.value = "";
+}
+function cm_crear_objeto () {
+    var codigo = 'CREAR OBJETO ' + cm_crear_objeto_nombre.value + ' (\n\t';
+    for( var i = 0; i < campos_crear_objeto.length ; i++){
+        if(i>0) codigo += ",\n\t";
+        codigo += campos_crear_objeto[i].tipo + " " + campos_crear_objeto[i].nombre_campo  ;
+    }
+    codigo += "\n);";
+
+    //aqui los campos
+    newScriptEditor(null,codigo);
+    $('#modal_cm_crear_objeto').modal('hide');
+}
+function cm_asignar_permisos_tabla () {
 
 }
-function cm_backup_bd (invokedOn, selectedMenu) {
+function cm_crear_funcion () {
 
 }
-function cm_restore_bd (invokedOn, selectedMenu) {
+function cm_crear_procedimiento () {
 
 }
-function cm_asignar_permisos_bd (invokedOn, selectedMenu) {
-
+function cm_crear_usuario () {
+    var codigo = 'CREAR USUARIO ' + cm_crear_usuario_nombre.value + ' COLOCAR password ="'+cm_crear_usuario_pass.value+'";';
+    newScriptEditor(null,codigo);
+    $('#modal_cm_crear_usuario').modal('hide');
 }
-function cm_crear_tabla (invokedOn, selectedMenu) {
-
-}
-function cm_asignar_permisos_tabla (invokedOn, selectedMenu) {
-
-}
-function cm_ver_data_tabla (invokedOn, selectedMenu) {
-
-}
-function cm_crear_funcion (invokedOn, selectedMenu) {
-
-}
-function cm_crear_objeto (invokedOn, selectedMenu) {
-
-}
-function cm_crear_usuario (invokedOn, selectedMenu) {
-
-}
-function cm_eliminar_usuario (invokedOn, selectedMenu) {
-
-}
-
-
 function getCodigo(nombre){
     $.get("/ide/getCodigo?nombre="+nombre, function(data, status){
         var cod = data['codigo'];
@@ -139,6 +210,7 @@ function updateDbTree(){
                 'cm-tables'     : '#cm_tables',
                 'cm-table'      : '#cm_table',
                 'cm-functions'  : '#cm_functions',
+                'cm-procedures'  : '#cm_procedures',
                 'cm-objects'     : '#cm_objects',
                 'cm-users'     : '#cm_users',
                 'cm-user'     : '#cm_user'
@@ -151,9 +223,9 @@ function updateDbTree(){
 }
 
 function eliminarEditor(editorId){
-    document.getElementById("script-editor-"+editorId).remove();
-    document.getElementById("script-editor-"+editorId+"-li-tab").remove();
-    $('#sql').tab('show');
+    document.getElementById(""+editorId).remove();
+    document.getElementById(""+editorId+"-li-tab").remove();
+    $('#sql-tab').tab('show');
 }
 
 function reiniciar_editores(){
@@ -225,9 +297,9 @@ function executeScript(scriptPanelNum){
         .done(function(json_respuesta, status){
             document.getElementById('output-datos').innerHTML = json_respuesta['salida']
             //$('#output-datos').val($('#output-datos').val()+json_respuesta['salida']);
-            $('#output-plan').val($('#output-plan').val()+json_respuesta['plan']);
-            $('#output-mensajes').val($('#output-mensajes').val()+json_respuesta['mensajes']);
-            $('#output-historial').val($('#output-historial').val()+json_respuesta['historial']);
+            $('#output-plan').val(json_respuesta['plan']);
+            $('#output-mensajes').val(json_respuesta['mensajes']);
+            $('#output-historial').val(json_respuesta['historial']);
             updateDbTree();
         });
     
@@ -259,6 +331,7 @@ $('#btnNewReportEditor').click(function() {
             $('#ul-container-editors-tabs').append(data);
             init_codemirror_report_editor('txtReport'+reportPanelCounter,'Hola Report ' + reportPanelCounter);
             init_codemirror_report_editor('txtReport'+reportPanelCounter+'_results','Resultados ');
+            $('#report-editor-'+reportPanelCounter+"-tab").tab('show');
             reportPanelCounter++;
         });
     });
