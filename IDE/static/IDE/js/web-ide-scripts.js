@@ -305,6 +305,25 @@ function executeScript(scriptPanelNum){
     
 }
 
+
+// manda el codigo de un editor a ser analizado y devuelve la respuesta a los outputs
+function executeScriptSelected(scriptPanelNum){
+    $.post("/ide/executeScript", 
+    {
+        scriptPanelNum: scriptPanelNum,
+        sqlcode: codeEditors['txtScript'+scriptPanelNum].getSelection()
+    })
+        .done(function(json_respuesta, status){
+            document.getElementById('output-datos').innerHTML = json_respuesta['salida']
+            //$('#output-datos').val($('#output-datos').val()+json_respuesta['salida']);
+            $('#output-plan').val(json_respuesta['plan']);
+            $('#output-mensajes').val(json_respuesta['mensajes']);
+            $('#output-historial').val(json_respuesta['historial']);
+            updateDbTree();
+        });
+    
+}
+
 function init_codemirror_report_editor(article_id,value){
     var editor = CodeMirror($('#'+article_id)[0], {
         value: value,
